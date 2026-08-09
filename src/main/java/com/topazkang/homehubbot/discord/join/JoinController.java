@@ -65,7 +65,12 @@ public class JoinController {
         </head>
         <body>
             <h2>접속 요청이 완료되었습니다.</h2>
-            <p>이 창은 닫으셔도 됩니다.</p>
+            <p>이 창은 자동으로 닫힙니다.</p>
+            <script>
+                setTimeout(() => {
+                    window.close();
+                }, 1000);
+            </script>
         </body>
         </html>
         """;
