@@ -16,7 +16,11 @@ public class JoinController {
 
     @GetMapping("/{token}")
     public ResponseEntity<String> join(@PathVariable String token, HttpServletRequest request) {
-        String ip = request.getRemoteAddr();
+        String ip = request.getHeader("CF-Connecting-IP");
+
+        if (ip == null || ip.isBlank()) {
+            ip = request.getRemoteAddr();
+        }
 
         joinService.processJoinLink(token, ip);
 
