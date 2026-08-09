@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: home-hub-bot
+
+discord:
+  token: ${DISCORD_BOT_TOKEN}
+
+app:
+  baselink: ${BASE_LINK}
