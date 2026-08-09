@@ -22,6 +22,12 @@ public class JoinController {
             ip = request.getRemoteAddr();
         }
 
+        System.out.println("CF-Connecting-IP = "
+                + request.getHeader("CF-Connecting-IP"));
+
+        System.out.println("RemoteAddr = "
+                + request.getRemoteAddr());
+
         joinService.processJoinLink(token, ip);
 
         String html = """
