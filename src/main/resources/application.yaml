@@ -2,8 +2,14 @@ spring:
   application:
     name: home-hub-bot
 
+server:
+  port: ${SERVER_PORT:8080}
+
 discord:
   token: ${DISCORD_BOT_TOKEN}
 
 app:
   baselink: ${BASE_LINK}
+
+agent:
+  link: ${AGENT_LINK}

@@ -1,5 +1,7 @@
 package com.topazkang.homehubbot.discord.join;
 
+import com.topazkang.homehubbot.bridge.BridgeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 @Service
+@RequiredArgsConstructor
 public class JoinService {
+
+    private final BridgeService bridgeService;
 
     @Value("${app.baselink}")
     private String baseLink;
@@ -53,7 +58,7 @@ public class JoinService {
         JoinTicket ticket = validateJoinLink(token);
 
         System.out.println(ticket+"/"+ip);
-        //TODO: 브릿지 메서드 추가 예정
+        bridgeService.joinNode(ip, ticket);
     }
 
     /**
