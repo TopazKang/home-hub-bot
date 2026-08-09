@@ -20,23 +20,50 @@ public class JoinController {
             @PathVariable String token
     ) {
         String html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>HomeHub</title>
-        </head>
-        <body>
-            <h2>게임 서버 접속</h2>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>HomeHub</title>
+            </head>
+            <body>
+                <h2>게임 서버 접속</h2>
+                <button onclick="join()">접속 허용</button>
+                
+                <p id="message"></p>
 
-            <form method="post">
-                <button type="submit">
-                    접속 허용
-                </button>
-            </form>
-        </body>
-        </html>
-        """;
+                <script>
+                    async function join() {
+                        const button = document.querySelector("button");
+                        const message = document.getElementById("message");
+
+                        button.disabled = true;
+                        message.innerText = "접속 처리 중...";
+
+                        try {
+                            const response = await fetch(window.location.pathname, {
+                                method: "POST"
+                            });
+
+                            if (!response.ok) {
+                                throw new Error("JOIN 실패");
+                            }
+
+                            message.innerText = "접속 요청이 완료되었습니다.";
+
+                            setTimeout(() => {
+                                window.close();
+                            }, 1000);
+
+                        } catch (e) {
+                            message.innerText = "접속 요청에 실패했습니다.";
+                            button.disabled = false;
+                        }
+                    }
+                </script>
+            </body>
+            </html>
+            """;
 
         return ResponseEntity.ok()
                 .header("Content-Type", "text/html; charset=UTF-8")
@@ -44,7 +71,7 @@ public class JoinController {
     }
 
     @PostMapping("/{token}")
-    public ResponseEntity<String> processJoin(
+    public ResponseEntity<Void> processJoin(
             @PathVariable String token,
             HttpServletRequest request
     ) {
@@ -56,28 +83,7 @@ public class JoinController {
 
         joinService.processJoinLink(token, ip);
 
-        String html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>HomeHub</title>
-        </head>
-        <body>
-            <h2>접속 요청이 완료되었습니다.</h2>
-            <p>이 창은 자동으로 닫힙니다.</p>
-            <script>
-                setTimeout(() => {
-                    window.close();
-                }, 1000);
-            </script>
-        </body>
-        </html>
-        """;
-
-        return ResponseEntity.ok()
-                .header("Content-Type", "text/html; charset=UTF-8")
-                .body(html);
+        return ResponseEntity.ok().build();
     }
 
 }
