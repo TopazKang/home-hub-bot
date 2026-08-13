@@ -24,42 +24,35 @@ public class JoinController {
             <html>
             <head>
                 <meta charset="UTF-8">
-                <title>HomeHub</title>
+                <title>Home Hub</title>
             </head>
+            
             <body>
-                <h2>게임 서버 접속</h2>
-                <button onclick="join()">접속 허용</button>
-                
-                <p id="message"></p>
-
+                <p id="message">게임 서버 접속을 준비하고 있습니다...</p>
+            
                 <script>
-                    async function join() {
-                        const button = document.querySelector("button");
-                        const message = document.getElementById("message");
-
-                        button.disabled = true;
-                        message.innerText = "접속 처리 중...";
-
+                    window.addEventListener("load", async () => {
                         try {
                             const response = await fetch(window.location.pathname, {
                                 method: "POST"
                             });
-
-                            if (!response.ok) {
-                                throw new Error("JOIN 실패");
+            
+                            if (response.ok) {
+                                document.getElementById("message").innerText =
+                                    "접속 준비가 완료되었습니다.";
+            
+                                setTimeout(() => {
+                                    window.close();
+                                }, 1000);
+                            } else {
+                                document.getElementById("message").innerText =
+                                    "접속 준비에 실패했습니다.";
                             }
-
-                            message.innerText = "접속 요청이 완료되었습니다.";
-
-                            setTimeout(() => {
-                                window.close();
-                            }, 1000);
-
                         } catch (e) {
-                            message.innerText = "접속 요청에 실패했습니다.";
-                            button.disabled = false;
+                            document.getElementById("message").innerText =
+                                "서버와 통신할 수 없습니다.";
                         }
-                    }
+                    });
                 </script>
             </body>
             </html>
