@@ -7,7 +7,6 @@ import com.topazkang.homehubbot.discord.monitor.NodeInfo;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +15,6 @@ public class DiscordCommandHandler extends ListenerAdapter {
 
     private final JoinService joinService;
     private final MonitorService monitorService;
-    private final InfoEndpoint infoEndpoint;
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
