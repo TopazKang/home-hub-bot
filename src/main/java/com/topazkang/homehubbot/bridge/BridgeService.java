@@ -1,6 +1,7 @@
 package com.topazkang.homehubbot.bridge;
 
 import com.topazkang.homehubbot.discord.join.JoinTicket;
+import com.topazkang.homehubbot.discord.monitor.NodeInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,12 @@ public class BridgeService {
                 .body(request)
                 .retrieve()
                 .toBodilessEntity();
+    }
+
+    public NodeInfo getStatusInfo() {
+        return restClient.get()
+                .uri("/node/info")
+                .retrieve()
+                .body(NodeInfo.class);
     }
 }
